@@ -5,7 +5,7 @@ if (File.Exists("eszkozok.txt"))
     string[] sorok = File.ReadAllLines("eszkozok.txt");
     foreach (string sor in sorok)
     {
-        if (string.IsNullOrWhiteSpace(sor.Split(';')[0]) || string.IsNullOrWhiteSpace(sor.Split(';')[1]) || string.IsNullOrWhiteSpace(sor.Split(';')[2]))
+        if (!string.IsNullOrWhiteSpace(sor))
         {
             string[] adatok = sor.Split(';');
             if (adatok.Length >= 4)
@@ -22,10 +22,19 @@ if (File.Exists("eszkozok.txt"))
                     eszkozok.Add(new Eszkoz(adatok[0], adatok[1], adatok[2], napiDij, keszlet));
                 }
             }
+            else Console.WriteLine("Nem megfelelő az adatok száma");
+            continue;
         }
+        else Console.WriteLine("Van(nak) üres sor(ok)");
+        continue;
     }
 }
+else Console.WriteLine("Fájl nem létezik");
+
 foreach (Eszkoz eszkoz in eszkozok)
 {
     Console.WriteLine(eszkoz.ToString());
 }
+
+Console.WriteLine($"Összes regisztrált eszköz: {Eszkoz.OsszesRegisztraltEszkoz}");
+
